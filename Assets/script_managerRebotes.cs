@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum TiposChoque
+public enum TiposChoque
 {
     Elestico, // e=1
     Inelastico, // 0<e<1
@@ -24,6 +24,8 @@ public class script_managerRebotes : MonoBehaviour
     float angle=45f;
     [SerializeField]
     float fuerza = 190f;
+
+    public TiposChoque currentType;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,9 +40,8 @@ public class script_managerRebotes : MonoBehaviour
         float solveAngle = angle * Mathf.Deg2Rad;
         Vector3 directionLunch = new Vector3(Mathf.Cos(solveAngle), Mathf.Sin(solveAngle), 0f);
         selfRigid.AddForce(directionLunch * fuerza, ForceMode.Force);
-        //plataformas = GameObject.FindObjectsOfType<script_plataformas>();
-        //selfPhysicsMat.bounciness = 0;
-        //selfColl.material = selfPhysicsMat;
+
+        
     }
 
     // Update is called once per frame
@@ -63,18 +64,25 @@ public class script_managerRebotes : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (plataformas != null)
+        if (collision.gameObject.CompareTag("Other"))
         {
-            script_plataformas temp = collision.gameObject.GetComponent<script_plataformas>();
-
-            if (temp != null && temp!=plataformas)
-            {
-                plataformas.CambiarEscala();
-
-                plataformas = temp;
-            }
+            Destroy(this.gameObject, 7f);
         }
+        else
+        {
+            if (plataformas != null)
+            {
+                script_plataformas temp = collision.gameObject.GetComponent<script_plataformas>();
 
-        plataformas = collision.gameObject.GetComponent<script_plataformas>();
+                if (temp != null && temp != plataformas)
+                {
+                    plataformas.CambiarEscala();
+
+                    plataformas = temp;
+                }
+            }
+
+            plataformas = collision.gameObject.GetComponent<script_plataformas>();
+        }
     }
 }
