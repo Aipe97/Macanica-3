@@ -6,7 +6,7 @@ public class script_plataformas : MonoBehaviour
 {
     Vector3 escalaInicial;
 
-    float rangoVaricion=2;
+    float rangoVaricion=1;
 
     // Start is called before the first frame update
     void Start()
@@ -22,10 +22,9 @@ public class script_plataformas : MonoBehaviour
 
     public void CambiarEscala()
     {
-        float cambio = Random.Range(0f, rangoVaricion);
+        float cambio = Random.Range(-rangoVaricion, rangoVaricion);
         Vector3 temp = escalaInicial;
         temp.y += cambio;
-        print(temp);
         transform.parent.localScale = temp;
     }
 

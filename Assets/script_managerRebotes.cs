@@ -21,7 +21,9 @@ public class script_managerRebotes : MonoBehaviour
     Collider selfColl;
     PhysicMaterial selfPhysicsMat;
     [SerializeField]
-    float fuerza = 200f;
+    float angle=45f;
+    [SerializeField]
+    float fuerza = 190f;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +34,10 @@ public class script_managerRebotes : MonoBehaviour
         selfColl = GetComponent<Collider>();
         selfPhysicsMat = selfColl.material;
         selfRigid = GetComponent<Rigidbody>();
-        selfRigid.AddForce(Vector3.right* fuerza, ForceMode.Force);
+
+        float solveAngle = angle * Mathf.Deg2Rad;
+        Vector3 directionLunch = new Vector3(Mathf.Cos(solveAngle), Mathf.Sin(solveAngle), 0f);
+        selfRigid.AddForce(directionLunch * fuerza, ForceMode.Force);
         //plataformas = GameObject.FindObjectsOfType<script_plataformas>();
         //selfPhysicsMat.bounciness = 0;
         //selfColl.material = selfPhysicsMat;
