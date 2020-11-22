@@ -6,7 +6,7 @@ public class transformar_pelota : MonoBehaviour
 {
     script_managerRebotes stateRef;
     Rigidbody otherBall,plRigid;
-    Vector3 otherInitPos;
+    Vector3 otherInitPos= new Vector3(37f,-3f,0f);
     Collider otherColl, plCollider;
     PhysicMaterial playerMat;
     // Start is called before the first frame update
@@ -14,15 +14,8 @@ public class transformar_pelota : MonoBehaviour
     {
         otherBall = GameObject.FindGameObjectWithTag("Other").GetComponent<Rigidbody>();
         otherColl = otherBall.GetComponent<Collider>();
-        otherInitPos = otherBall.transform.position;
+        //otherInitPos = otherBall.transform.position;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     private void RestartOtherBall()
     {
@@ -34,8 +27,9 @@ public class transformar_pelota : MonoBehaviour
         }
     }
 
-    private void PerpareBalls()
+    private void PrepareBalls()
     {
+
         switch (stateRef.currentType)
         {
             case (TiposChoque.Elestico): //e=1
@@ -60,7 +54,7 @@ public class transformar_pelota : MonoBehaviour
     private void isElastic()
     {
         Vector3 initPos = otherInitPos;
-        initPos.x += 10f;
+        initPos.x += 5f;
 
         otherBall.position = initPos;
         float magnitud = plRigid.velocity.magnitude;
@@ -72,7 +66,7 @@ public class transformar_pelota : MonoBehaviour
     private void isInelastic()
     {
         Vector3 initPos = otherInitPos;
-        initPos.x += 10f;
+        initPos.x += 5f;
 
         otherBall.position = initPos;
         float magnitud = plRigid.velocity.magnitude;
@@ -106,7 +100,7 @@ public class transformar_pelota : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerMat.bounciness =(stateRef.currentType== TiposChoque.Plastico) ? 0f: 0.5f;
-
+            PrepareBalls();
 
         }
     }
