@@ -2,13 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+enum TiposChoque
+{
+    Elestico, // e=1
+    Inelastico, // 0<e<1
+    Plastico // e=0
+}
+
 public class script_managerRebotes : MonoBehaviour
 {
     public static script_managerRebotes instance;
 
+
+
     script_plataformas plataformas;
 
     Rigidbody selfRigid;
+    Collider selfColl;
+    PhysicMaterial selfPhysicsMat;
     [SerializeField]
     float fuerza = 200f;
     // Start is called before the first frame update
@@ -18,10 +29,13 @@ public class script_managerRebotes : MonoBehaviour
         {
             instance = this;
         }
-
+        selfColl = GetComponent<Collider>();
+        selfPhysicsMat = selfColl.material;
         selfRigid = GetComponent<Rigidbody>();
         selfRigid.AddForce(Vector3.right* fuerza, ForceMode.Force);
         //plataformas = GameObject.FindObjectsOfType<script_plataformas>();
+        //selfPhysicsMat.bounciness = 0;
+        //selfColl.material = selfPhysicsMat;
     }
 
     // Update is called once per frame
@@ -29,6 +43,8 @@ public class script_managerRebotes : MonoBehaviour
     {
         
     }
+
+
 
     public void variarEscalas()
     {
