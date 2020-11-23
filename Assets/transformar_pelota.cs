@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class transformar_pelota : MonoBehaviour
 {
@@ -29,29 +30,30 @@ public class transformar_pelota : MonoBehaviour
 
     private void PrepareBalls()
     {
+        float velocidad = 0f;
 
         switch (stateRef.currentType)
         {
             case (TiposChoque.Elestico): //e=1
                 {
-                    isElastic();
+                    isElastic(out velocidad);
                     break;
                 }
             case (TiposChoque.Inelastico): //0<e<1
                 {
-                    isInelastic();
+                    isInelastic(out velocidad);
                     break;
                 }
             case (TiposChoque.Plastico)://e=0
                 {
-                    isPlastic();
+                    isPlastic(out velocidad);
                     break;
                 }
         }
 
     }
 
-    private void isElastic()
+    private void isElastic(out float fnt_speed)
     {
         Vector3 initPos = otherInitPos;
         initPos.x += 5f;
@@ -61,10 +63,12 @@ public class transformar_pelota : MonoBehaviour
 
 
         otherBall.AddForce(Vector3.left * magnitud, ForceMode.Impulse);
+        fnt_speed = magnitud;
     }
 
-    private void isInelastic()
+    private void isInelastic(out float fnt_speed)
     {
+
         Vector3 initPos = otherInitPos;
         initPos.x += 5f;
 
@@ -72,11 +76,13 @@ public class transformar_pelota : MonoBehaviour
         float magnitud = plRigid.velocity.magnitude;
 
         otherBall.AddForce(Vector3.left * (magnitud/2), ForceMode.Impulse);
+        fnt_speed = magnitud/2;
     }
 
-    private void isPlastic()
+    private void isPlastic(out float fnt_speed)
     {
         otherBall.position = otherInitPos;
+        fnt_speed = 0f;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -99,6 +105,8 @@ public class transformar_pelota : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            otherBall.velocity = Vector3.zero;
+
             playerMat.bounciness =(stateRef.currentType== TiposChoque.Plastico) ? 0f: 0.5f;
             PrepareBalls();
 
