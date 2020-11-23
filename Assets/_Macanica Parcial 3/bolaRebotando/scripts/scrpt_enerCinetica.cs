@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class scrpt_enerCinetica : MonoBehaviour
 {
-    public Text valorCinetica;
+    public Text textoCinetica;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +22,6 @@ public class scrpt_enerCinetica : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         
-        valorCinetica.text = "(1/2)mv2=" + ((collision.gameObject.GetComponent<Rigidbody>().mass * collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude) / 2).ToString("F2") + "J";
+        textoCinetica.text = ((collision.gameObject.GetComponent<Rigidbody>().mass * collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude) / 2).ToString("F2") + "J";
     }
 }
