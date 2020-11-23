@@ -41,7 +41,7 @@ public class script_managerRebotes : MonoBehaviour
         Vector3 directionLunch = new Vector3(Mathf.Cos(solveAngle), Mathf.Sin(solveAngle), 0f);
         selfRigid.AddForce(directionLunch * fuerza, ForceMode.Force);
 
-        
+        currentType = (TiposChoque)Random.Range(0, 2);
     }
 
     // Update is called once per frame
