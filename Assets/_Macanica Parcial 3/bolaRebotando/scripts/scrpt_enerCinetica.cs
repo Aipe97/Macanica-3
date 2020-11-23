@@ -10,7 +10,7 @@ public class scrpt_enerCinetica : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        textoCinetica.text = "";
     }
 
     // Update is called once per frame
@@ -22,6 +22,6 @@ public class scrpt_enerCinetica : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         
-        textoCinetica.text = ((collision.gameObject.GetComponent<Rigidbody>().mass * collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude) / 2).ToString("F2") + "J";
+        textoCinetica.text = "Ec= " + ((collision.gameObject.GetComponent<Rigidbody>().mass * collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude) / 2).ToString("F3") + "J";
     }
 }

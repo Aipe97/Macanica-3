@@ -19,7 +19,7 @@ public class script_managerRebotes : MonoBehaviour
 
     Rigidbody selfRigid;
     Collider selfColl;
-    PhysicMaterial selfPhysicsMat;
+    PhysicMaterial selfPhysicsMat; //SI NO SE ESTA USANDO PARA NADA SERIA BUENO ELIMINARLO
     [SerializeField]
     float angle=45f;
     [SerializeField]
