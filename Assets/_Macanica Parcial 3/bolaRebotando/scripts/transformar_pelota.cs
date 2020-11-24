@@ -34,7 +34,7 @@ public class transformar_pelota : MonoBehaviour
 
         switch (stateRef.currentType)
         {
-            case (TiposChoque.Elestico): //e=1
+            case (TiposChoque.Elastico): //e=1
                 {
                     isElastic(out velocidad);
                     break;

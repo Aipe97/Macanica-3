@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum TiposChoque
 {
-    Elestico, // e=1
+    Elastico, // e=1
     Inelastico, // 0<e<1
     Plastico // e=0
 }
