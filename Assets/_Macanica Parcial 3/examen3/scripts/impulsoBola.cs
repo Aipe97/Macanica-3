@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class impulsoBola : MonoBehaviour
 {
+    int numeroParaMeterSeno;
+    float numeroImpulsador;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +16,8 @@ public class impulsoBola : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        numeroParaMeterSeno++;
+        numeroImpulsador = Mathf.Sin(numeroParaMeterSeno);
+        print(numeroImpulsador);
     }
 }

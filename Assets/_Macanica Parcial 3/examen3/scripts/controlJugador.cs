@@ -15,7 +15,7 @@ public class controlJugador : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
-            print("detected");
+            //print("detected");
             transform.Rotate(0, 1, 0, Space.Self);
         }
     }
