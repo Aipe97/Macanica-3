@@ -62,6 +62,7 @@ public class scpt_movimientoCamara : MonoBehaviour
 
     private Vector3 fnt_calcularPosicion()
     {
+        print("X: " + Mathf.Cos(angle) + "||Z: " + Mathf.Sin(angle));
         Vector3 Nposicion = new Vector3(Mathf.Cos(angle), 0.0f, Mathf.Sin(angle))*distanciaAlObjeto;
         Nposicion.y = transform.position.y-pelota.position.y;
 
