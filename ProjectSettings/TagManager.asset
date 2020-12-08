@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Other
   - TextoRestitucion
+  - esfera
   layers:
   - Default
   - TransparentFX
