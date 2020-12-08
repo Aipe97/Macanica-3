@@ -12,13 +12,19 @@ public class scpt_movimientoCamara : MonoBehaviour
     Transform camera;
     PositionConstraint constrainPos;
 
+    [Range(0.0f,360.0f)]
+    public float seudoAngle=0f;
+    public float dot;
+    public float rad;
     float angle=0;
     float distanciaAlObjeto;
     // Start is called before the first frame update
     void Start()
     {
         distanciaAlObjeto = Vector2.Distance(fnt_ObetenerPlanoAereo(transform.position), fnt_ObetenerPlanoAereo(pelota.position));
-        angle = Vector2.Dot(fnt_ObetenerPlanoAereo(transform.position).normalized, fnt_ObetenerPlanoAereo(pelota.position).normalized);
+        dot = Vector2.Dot(fnt_ObetenerPlanoAereo(transform.position).normalized, fnt_ObetenerPlanoAereo(pelota.position).normalized);
+        rad = Mathf.Acos(dot) + (180f*Mathf.Deg2Rad);
+        print(angle* Mathf.Rad2Deg);
         camera = Camera.main.transform;
         camera.LookAt(transform);
         constrainPos=GetComponent<PositionConstraint>();
@@ -37,13 +43,11 @@ public class scpt_movimientoCamara : MonoBehaviour
         if (!constrainPos.constraintActive)
         {
             float h = Input.GetAxis("Horizontal");
-            angle += Time.deltaTime * h;
+            rad += Time.deltaTime * h;
             transform.position = fnt_calcularPosicion();
             transform.LookAt(new Vector3(pelota.transform.position.x, transform.position.y, pelota.transform.position.z));
             camera.position = transform.position;
             camera.LookAt(pelota);
-            
-            
         }
 
 
@@ -62,7 +66,8 @@ public class scpt_movimientoCamara : MonoBehaviour
 
     private Vector3 fnt_calcularPosicion()
     {
-        Vector3 Nposicion = new Vector3(Mathf.Cos(angle), 0.0f, Mathf.Sin(angle))*distanciaAlObjeto;
+        
+        Vector3 Nposicion = new Vector3(Mathf.Cos(rad), 0.0f, Mathf.Sin(rad))*distanciaAlObjeto;
         Nposicion.y = transform.position.y-pelota.position.y;
 
         constrainPos.translationOffset = Nposicion;
