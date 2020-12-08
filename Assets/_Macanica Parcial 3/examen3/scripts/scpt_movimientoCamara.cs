@@ -12,8 +12,6 @@ public class scpt_movimientoCamara : MonoBehaviour
     Transform camera;
     PositionConstraint constrainPos;
 
-    [Range(0.0f,360.0f)]
-    public float seudoAngle=0f;
     public float dot;
     public float rad;
     float angle=0;
@@ -25,7 +23,7 @@ public class scpt_movimientoCamara : MonoBehaviour
         dot = Vector2.Dot(fnt_ObetenerPlanoAereo(transform.position).normalized, fnt_ObetenerPlanoAereo(pelota.position).normalized);
         rad = Mathf.Acos(dot) + (180f*Mathf.Deg2Rad);
         camera = Camera.main.transform;
-        camera.LookAt(transform);
+        camera.LookAt(pelota);
         constrainPos=GetComponent<PositionConstraint>();
         constrainPos.constraintActive = true;
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class impulsoBola : MonoBehaviour
 {
     int numeroParaMeterSeno;
-    float numeroImpulsador;
+    public float numeroImpulsador;
     Rigidbody rb_bolaBlanca;
     Transform t_posicionCamara;
     Vector3 v3_fuerzaPaPegar;
@@ -13,20 +13,18 @@ public class impulsoBola : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb_bolaBlanca = GameObject.FindGameObjectWithTag("bolaBlanca").GetComponent<Rigidbody>();
-        t_posicionCamara = GameObject.FindGameObjectWithTag("posicionCamara").GetComponent<Transform>();        
+        rb_bolaBlanca = GetComponent<Rigidbody>();
+        t_posicionCamara = GameObject.FindGameObjectWithTag("posicionCamara").transform;        
     }
 
     // Update is called once per frame
     void Update()
     {
-        numeroParaMeterSeno++;
-        numeroImpulsador = Mathf.Abs(Mathf.Sin(numeroParaMeterSeno));
-        v3_fuerzaPaPegar = new Vector3(1, 1, 1) * numeroImpulsador;
+        numeroImpulsador =1-Mathf.Abs(Mathf.Sin(Time.time));
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb_bolaBlanca.AddForce((t_posicionCamara.forward * 100) - (v3_fuerzaPaPegar * 100));
+            rb_bolaBlanca.AddForce(t_posicionCamara.forward* numeroImpulsador * 100f);
             
         }
 
