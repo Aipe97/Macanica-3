@@ -12,18 +12,28 @@ public class scrpt_CalculoPoryeccion : MonoBehaviour
     Vector3 cruz, finalDir;
     public float angle;
     bool isHitting;
-
+    LineRenderer previsualization;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        previsualization = GetComponent<LineRenderer>();
+
+        previsualization.positionCount = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         fnt_CalculateDirection();
+        if (isHitting)
+        {
+            DrawPrediction();
+        }
+        else
+        {
+            previsualization.positionCount = 0;
+        }
     }
 
     private void fnt_CalculateDirection()
@@ -44,7 +54,25 @@ public class scrpt_CalculoPoryeccion : MonoBehaviour
                 angle = (rad * Mathf.Rad2Deg);
 
                 finalDir = new Vector3(Mathf.Cos(rad), 0.0f, Mathf.Sin(rad));
+
+
             }
+        }
+    }
+
+    private void DrawPrediction()
+    {
+        float mag = (Vector3.Distance(hit.transform.position, transform.position))+1f;
+        previsualization.positionCount = (int)mag*4;
+        for(int i = 0; i < (int)mag*2; i++)
+        {
+            Vector3 pos = (direccionProyeccion.forward)/2;
+            previsualization.SetPosition(i, (pos * i)+transform.position);
+        }
+        for (int i = (int)mag*2; i < (int)mag*4; i++)
+        {
+            Vector3 pos = finalDir/2;
+            previsualization.SetPosition(i, (pos * i) + hit.transform.position);
         }
     }
 

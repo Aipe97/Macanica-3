@@ -24,7 +24,6 @@ public class scpt_movimientoCamara : MonoBehaviour
         distanciaAlObjeto = Vector2.Distance(fnt_ObetenerPlanoAereo(transform.position), fnt_ObetenerPlanoAereo(pelota.position));
         dot = Vector2.Dot(fnt_ObetenerPlanoAereo(transform.position).normalized, fnt_ObetenerPlanoAereo(pelota.position).normalized);
         rad = Mathf.Acos(dot) + (180f*Mathf.Deg2Rad);
-        print(angle* Mathf.Rad2Deg);
         camera = Camera.main.transform;
         camera.LookAt(transform);
         constrainPos=GetComponent<PositionConstraint>();
