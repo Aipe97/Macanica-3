@@ -11,7 +11,7 @@ public class scrpt_CalculoPoryeccion : MonoBehaviour
     float rad,dot;
     Vector3 cruz, finalDir;
     public float angle;
-    bool isHitting;
+    bool isHitting, isBall;
     LineRenderer previsualization;
 
     // Start is called before the first frame update
@@ -26,7 +26,7 @@ public class scrpt_CalculoPoryeccion : MonoBehaviour
     void Update()
     {
         fnt_CalculateDirection();
-        if (isHitting)
+        if (isHitting && isBall)
         {
             DrawPrediction();
         }
@@ -42,15 +42,20 @@ public class scrpt_CalculoPoryeccion : MonoBehaviour
         isHitting = Physics.Raycast(rayo, out hit);
         if (isHitting)
         {
-            if (hit.transform.CompareTag("esfera"))
+            isBall = hit.transform.CompareTag("esfera");
+            if (isBall)
             {
+
                 Vector3 center2point = (hit.point - hit.transform.position).normalized;
                 Vector3 object2ball = (hit.transform.position - transform.position).normalized;
+
+
+                float degOffset = Mathf.Acos(object2ball.x/object2ball.magnitude) + (180f * Mathf.Rad2Deg);
 
                 dot = Vector3.Dot(center2point, object2ball);//Dar con el angulo
                 cruz = Vector3.Cross(center2point, object2ball);//Saber direccion
 
-                rad = (Mathf.Acos(dot) * Mathf.Sign(cruz.y)) + (-90f * Mathf.Deg2Rad);
+                rad = (Mathf.Acos(dot) * Mathf.Sign(cruz.y)) - degOffset;
                 angle = (rad * Mathf.Rad2Deg);
 
                 finalDir = new Vector3(Mathf.Cos(rad), 0.0f, Mathf.Sin(rad));
@@ -80,7 +85,7 @@ public class scrpt_CalculoPoryeccion : MonoBehaviour
     {
         Gizmos.DrawRay(rayo);
 
-        if (isHitting)
+        if (isHitting && isBall)
         {
             Ray proyection = new Ray(hit.transform.position, finalDir);
             Gizmos.DrawRay(proyection);

@@ -26,9 +26,9 @@ public class impulsoBola : MonoBehaviour
         f_valorSeno = Mathf.Sin(Time.time);
         f_fuerzaPostSeno = 1 - Mathf.Abs(f_valorSeno);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && rb_bolaBlanca.velocity.magnitude<0.1f)
         {
-            rb_bolaBlanca.AddForce(t_posicionCamara.forward* f_fuerzaPostSeno * 100f);
+            rb_bolaBlanca.AddForce(t_posicionCamara.forward* f_fuerzaPostSeno * 400f);
             
         }
 

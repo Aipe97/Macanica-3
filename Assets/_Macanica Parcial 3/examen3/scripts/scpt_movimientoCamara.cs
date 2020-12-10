@@ -8,10 +8,10 @@ public class scpt_movimientoCamara : MonoBehaviour
 
     [SerializeField]
     Transform pelota;
-
+    Rigidbody whiteballRigid;
     Transform camera;
     PositionConstraint constrainPos;
-
+    
     public float dot;
     public float rad;
     float angle=0;
@@ -24,20 +24,17 @@ public class scpt_movimientoCamara : MonoBehaviour
         rad = Mathf.Acos(dot) + (180f*Mathf.Deg2Rad);
         camera = Camera.main.transform;
         camera.LookAt(pelota);
-        constrainPos=GetComponent<PositionConstraint>();
+        whiteballRigid = pelota.GetComponent<Rigidbody>();
+        constrainPos =GetComponent<PositionConstraint>();
         constrainPos.constraintActive = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            constrainPos.constraintActive = false;
-            fnt_RestituirPosicionCamara();
-        }
+        constrainPos.constraintActive = whiteballRigid.velocity.magnitude < 0.1;
 
-        if (!constrainPos.constraintActive)
+        if (constrainPos.constraintActive)
         {
             float h = Input.GetAxis("Horizontal");
             rad += Time.deltaTime * h;
@@ -45,6 +42,10 @@ public class scpt_movimientoCamara : MonoBehaviour
             transform.LookAt(new Vector3(pelota.transform.position.x, transform.position.y, pelota.transform.position.z));
             camera.position = transform.position;
             camera.LookAt(pelota);
+        }
+        else
+        {
+            fnt_RestituirPosicionCamara();
         }
 
 
