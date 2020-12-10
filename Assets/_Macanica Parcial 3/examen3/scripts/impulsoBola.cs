@@ -32,7 +32,7 @@ public class impulsoBola : MonoBehaviour
             
         }
 
-        //print(numeroImpulsador);
+        //print(f_valorSeno + 1);
 
         ui_slider.value = Mathf.Clamp(f_valorSeno + 1, 0, 2); //60 es el valor máximo
     }
