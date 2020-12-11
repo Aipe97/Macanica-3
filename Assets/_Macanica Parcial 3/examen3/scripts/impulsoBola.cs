@@ -11,6 +11,7 @@ public class impulsoBola : MonoBehaviour
     Rigidbody rb_bolaBlanca;
     Transform t_posicionCamara;
     GameObject ui_slider;
+    Text textoRestitucion, textoChoqueTipo;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,8 @@ public class impulsoBola : MonoBehaviour
         rb_bolaBlanca = GetComponent<Rigidbody>();
         t_posicionCamara = GameObject.FindGameObjectWithTag("posicionCamara").transform;
         ui_slider = GameObject.FindGameObjectWithTag("slider");
+        textoRestitucion = GameObject.FindGameObjectWithTag("TextoRestitucion").GetComponent<Text>();
+        textoChoqueTipo = GameObject.FindGameObjectWithTag("textoChoqueTipo").GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -28,6 +31,8 @@ public class impulsoBola : MonoBehaviour
 
         if(rb_bolaBlanca.velocity.magnitude < 0.1f)
         {
+            textoChoqueTipo.text = "Restitucion";
+            textoRestitucion.text = "e = (Miu\u2081 - Miu\u2082) / (Velocidad\u2081 - Velocidad\u2082)";
             ui_slider.SetActive(true);
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -40,6 +45,6 @@ public class impulsoBola : MonoBehaviour
 
         //print(f_valorSeno + 1);
 
-        ui_slider.GetComponent<Slider>().value = Mathf.Clamp(f_valorSeno + 1, 0, 2); //60 es el valor máximo
+        ui_slider.GetComponent<Slider>().value = Mathf.Clamp(f_valorSeno + 1, 0, 2);
     }
 }
