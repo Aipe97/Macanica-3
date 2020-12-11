@@ -10,30 +10,36 @@ public class impulsoBola : MonoBehaviour
     float f_valorSeno;
     Rigidbody rb_bolaBlanca;
     Transform t_posicionCamara;
-    Slider ui_slider;
+    GameObject ui_slider;
 
     // Start is called before the first frame update
     void Start()
     {
         rb_bolaBlanca = GetComponent<Rigidbody>();
         t_posicionCamara = GameObject.FindGameObjectWithTag("posicionCamara").transform;
-        ui_slider = GameObject.FindGameObjectWithTag("slider").GetComponent<Slider>();
+        ui_slider = GameObject.FindGameObjectWithTag("slider");
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         f_valorSeno = Mathf.Sin(Time.time);
         f_fuerzaPostSeno = 1 - Mathf.Abs(f_valorSeno);
 
-        if (Input.GetKeyDown(KeyCode.Space) && rb_bolaBlanca.velocity.magnitude<0.1f)
+        if(rb_bolaBlanca.velocity.magnitude < 0.1f)
         {
-            rb_bolaBlanca.AddForce(t_posicionCamara.forward* f_fuerzaPostSeno * 400f);
-            
+            ui_slider.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                rb_bolaBlanca.AddForce(t_posicionCamara.forward * f_fuerzaPostSeno * 400f);
+
+            }
         }
+        else
+            ui_slider.SetActive(false);
 
         //print(f_valorSeno + 1);
 
-        ui_slider.value = Mathf.Clamp(f_valorSeno + 1, 0, 2); //60 es el valor máximo
+        ui_slider.GetComponent<Slider>().value = Mathf.Clamp(f_valorSeno + 1, 0, 2); //60 es el valor máximo
     }
 }
