@@ -31,8 +31,8 @@ public class impulsoBola : MonoBehaviour
 
         if(rb_bolaBlanca.velocity.magnitude < 0.1f)
         {
-            textoChoqueTipo.text = "Restitucion";
-            textoRestitucion.text = "e = (Miu\u2081 - Miu\u2082) / (Velocidad\u2081 - Velocidad\u2082)";
+            textoChoqueTipo.text = "Formula restitucion";
+            textoRestitucion.text = "(Miu\u2081 - Miu\u2082) \n ———————————— \n (Velocidad\u2081 - Velocidad\u2082)";
             ui_slider.SetActive(true);
             if (Input.GetKeyDown(KeyCode.Space))
             {
