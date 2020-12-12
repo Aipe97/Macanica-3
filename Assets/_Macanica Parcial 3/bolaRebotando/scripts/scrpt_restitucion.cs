@@ -37,7 +37,7 @@ public class scrpt_restitucion : MonoBehaviour
             textoRestitucion.text = "Restitución = " + restitucion.ToString("F3") +
                                   "\nVelocidad =   " + velocidad1.ToString("F3") +
                                   "\nMiu =             " + mew1.ToString("F3") +
-                                  "\nMasa =          " + gameObject.GetComponent<Rigidbody>().mass;
+                                  "\nMasa =                 " + gameObject.GetComponent<Rigidbody>().mass;
 
             if (restitucion > 0.9f)
                 textoChoqueTipo.text = "Choque elastico";
