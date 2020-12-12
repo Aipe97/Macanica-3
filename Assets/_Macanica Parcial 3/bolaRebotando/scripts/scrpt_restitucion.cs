@@ -5,40 +5,51 @@ using UnityEngine.UI;
 
 public class scrpt_restitucion : MonoBehaviour
 {
-    Text textoRestitucion;  
-    float velocidad1, velocidad2, mew1, mew2;
-    
+    Text textoRestitucion, textoChoqueTipo;
+    float velocidad1, velocidad2, mew1, mew2, restitucion;
+
 
     private void Start()
     {
         textoRestitucion = GameObject.FindGameObjectWithTag("TextoRestitucion").GetComponent<Text>();
-        textoRestitucion.text = "" + gameObject.GetComponent<script_managerRebotes>().currentType;
+        textoChoqueTipo = GameObject.FindGameObjectWithTag("textoChoqueTipo").GetComponent<Text>();
+
     }
 
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Other"))
+        if (collision.gameObject.CompareTag("esfera"))
         {
             velocidad2 = collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude;
             velocidad1 = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
         }
-        
+
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Other"))
+        if (collision.gameObject.CompareTag("esfera"))
         {
             mew1 = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
             mew2 = collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude;
-            textoRestitucion.text = "Restitución \n e=" + Mathf.Abs((mew2 - mew1 / velocidad1 - velocidad2));
+            restitucion = Mathf.Abs((mew2 - mew1 / velocidad1 - velocidad2));
+            textoRestitucion.text = "Restitución = " + restitucion.ToString("F3") +
+                                  "\nVelocidad =   " + velocidad1.ToString("F3") +
+                                  "\nMiu =             " + mew1.ToString("F3") +
+                                  "\nMasa =          " + gameObject.GetComponent<Rigidbody>().mass;
 
-            /*print("antes " + velocidad1);
-            print("despues " + mew1);
+            if (restitucion > 0.9f)
+                textoChoqueTipo.text = "Choque elastico";
+            else if (restitucion < 0.1f)
+                textoChoqueTipo.text = "Choque plastico";
+            else
+                textoChoqueTipo.text = "Choque inelastico";
 
-            print("antes2 " + velocidad2);
-            print("despues2 " + mew2);*/
+
+            //e= 1 elastico
+            //e= 0 - 1 inelastico
+            //e= 0 plastico
         }
     }
 }

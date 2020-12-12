@@ -9,6 +9,7 @@ TagManager:
   - esfera
   - posicionCamara
   - slider
+  - textoChoqueTipo
   layers:
   - Default
   - TransparentFX
