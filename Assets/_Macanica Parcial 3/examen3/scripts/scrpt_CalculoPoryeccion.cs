@@ -11,6 +11,7 @@ public class scrpt_CalculoPoryeccion : MonoBehaviour
     float rad,dot;
     Vector3 cruz, finalDir;
     public float angle;
+    public Vector3 crus;
     bool isHitting, isBall;
     LineRenderer previsualization;
 
@@ -49,14 +50,14 @@ public class scrpt_CalculoPoryeccion : MonoBehaviour
                 Vector3 center2point = (hit.point - hit.transform.position).normalized;
                 Vector3 object2ball = (hit.transform.position - transform.position).normalized;
 
-
-                float degOffset = Mathf.Acos(object2ball.x/object2ball.magnitude) + (180f * Mathf.Rad2Deg);
+                Vector3 dirRot = Vector3.Cross(hit.transform.position.normalized,transform.position.normalized);
+                float degOffset = Mathf.Acos(Vector3.Dot(hit.transform.position.normalized,transform.position.normalized)*Mathf.Sign(dirRot.y)) ;
 
                 dot = Vector3.Dot(center2point, object2ball);//Dar con el angulo
                 cruz = Vector3.Cross(center2point, object2ball);//Saber direccion
 
-                rad = (Mathf.Acos(dot) * Mathf.Sign(cruz.y)) - degOffset;
-                angle = (rad * Mathf.Rad2Deg);
+                rad = (Mathf.Acos(dot) * Mathf.Sign(cruz.y)) + degOffset;
+               
 
                 finalDir = new Vector3(Mathf.Cos(rad), 0.0f, Mathf.Sin(rad));
 
