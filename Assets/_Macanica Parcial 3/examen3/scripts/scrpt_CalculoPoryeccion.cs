@@ -51,7 +51,7 @@ public class scrpt_CalculoPoryeccion : MonoBehaviour
                 Vector3 object2ball = (hit.transform.position - transform.position).normalized;
 
                 Vector3 dirRot = Vector3.Cross(hit.transform.position.normalized,transform.position.normalized);
-                float degOffset = Mathf.Acos(Vector3.Dot(hit.transform.position.normalized,transform.position.normalized)*Mathf.Sign(dirRot.y)) ;
+                float degOffset = Mathf.Acos(Vector3.Dot(hit.transform.position.normalized,transform.position.normalized)*Mathf.Sign(dirRot.y)) -(dirRot.z);
 
                 dot = Vector3.Dot(center2point, object2ball);//Dar con el angulo
                 cruz = Vector3.Cross(center2point, object2ball);//Saber direccion
