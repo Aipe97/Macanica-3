@@ -4,45 +4,91 @@ using UnityEngine;
 
 public class RotacionEtelar : MonoBehaviour
 {
-    public Transform trans_esfera1,trans_esfera2;
-    float vel_esfera1=1, vel_esfera2=4;
-    public float dis_esfera1, dis_esfera2;
-    float sizeEsfera1=1;
+    public Transform LunaObj;
+    float vel_esfera=1;
+    public float dis_esfera;
+    float sizeEsfera=1;
+    int f_numLunas = 0;
+
+    List<Luna> lunas;
     // Start is called before the first frame update
     void Start()
     {
+        lunas = new List<Luna>();
     }
     
 
     // Update is called once per frame
     void Update()
     {
+        RotatePlanet();
+        CheckSize();
+    }
+
+    private void RotatePlanet()
+    {
         float x = Input.GetAxis("Horizontal");
 
-        sizeEsfera1 += x* Time.deltaTime;
+        sizeEsfera += x * Time.deltaTime;
 
-        sizeEsfera1= Mathf.Clamp(sizeEsfera1, 0.5f, 5f);
+        sizeEsfera = Mathf.Clamp(sizeEsfera, 0.5f, 5f);
 
-        trans_esfera1.localScale = Vector3.one * (5.5f - sizeEsfera1);
-        trans_esfera2.localScale = Vector3.one * sizeEsfera1;
+        transform.localScale = Vector3.one *  sizeEsfera;
+        vel_esfera = (5f - sizeEsfera);
+        transform.Rotate(Vector3.up, vel_esfera);
+    }
 
-        vel_esfera1 = sizeEsfera1;
-        vel_esfera2 = (5f-sizeEsfera1);
+    private void CheckSize() {
+        int numLuna = (int)sizeEsfera;
 
-        //updatePosEsfera(trans_esfera1, vel_esfera1, dis_esfera1);
-        //updatePosEsfera(trans_esfera2, vel_esfera2, dis_esfera2);
+        if(numLuna!= f_numLunas)
+        {
+            CreateOrDeleteLuna(Mathf.Abs(numLuna-f_numLunas), numLuna>f_numLunas);
+        }
 
-        trans_esfera1.Rotate(Vector3.up, vel_esfera1);
-        trans_esfera2.Rotate(Vector3.up, vel_esfera2);
-
+        foreach(Luna l in lunas)
+        {
+            l.updatePosEsfera(sizeEsfera+0.5f);
+        }
 
     }
 
-    private void updatePosEsfera(Transform esfera, float vel, float dis)
+    private void CreateOrDeleteLuna(int dif, bool path)
     {
-        float x1 = Mathf.Cos(Time.time * vel) * dis;
-        float y1 = Mathf.Sin(Time.time * vel) * dis;
+        if (path) //Add
+        {
+            for (int i = 0; i < dif; i++)
+            {
+                Luna newMoon = new Luna();
+                newMoon.angleOffset = Time.time;
+                newMoon.planet = transform;
+                newMoon.lunaRef = Instantiate(LunaObj, transform.position, Quaternion.identity);
+                lunas.Add(newMoon);
+            }
 
-        esfera.position = new Vector3(x1, 0.0f, y1);
+            
+        }
+        else if(lunas.Count>0) //Delete
+        {
+            Destroy(lunas[lunas.Count-1].lunaRef.gameObject);
+            lunas.RemoveAt(lunas.Count-1);
+        }
+        f_numLunas = lunas.Count;
+    }
+
+    public class Luna
+    {
+
+        public float angleOffset;
+        public Transform planet;
+        public Transform lunaRef;
+
+        public void updatePosEsfera(float dis)
+        {
+            float x1 = Mathf.Cos(Time.time + angleOffset) * dis;
+            float y1 = Mathf.Sin(Time.time + angleOffset) * dis;
+
+            lunaRef.position = new Vector3(x1, 0.0f, y1) + planet.position;
+        }
     }
 }
