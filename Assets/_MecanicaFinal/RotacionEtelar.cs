@@ -6,7 +6,6 @@ public class RotacionEtelar : MonoBehaviour
 {
     public Transform LunaObj;
     float vel_esfera=1;
-    public float dis_esfera;
     float sizeEsfera=1;
     int f_numLunas = 0;
 
@@ -21,21 +20,22 @@ public class RotacionEtelar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RotatePlanet();
-        CheckSize();
+        
     }
 
     private void RotatePlanet()
     {
-        float x = Input.GetAxis("Horizontal");
-
-        sizeEsfera += x * Time.deltaTime;
-
-        sizeEsfera = Mathf.Clamp(sizeEsfera, 0.5f, 5f);
-
         transform.localScale = Vector3.one *  sizeEsfera;
-        vel_esfera = (5f - sizeEsfera);
+        vel_esfera = (5.5f - sizeEsfera);
         transform.Rotate(Vector3.up, vel_esfera);
+    }
+
+    public void EditPlanet(float size)
+    {
+        sizeEsfera = size;
+
+        RotatePlanet();
+        CheckSize();
     }
 
     private void CheckSize() {
@@ -48,7 +48,7 @@ public class RotacionEtelar : MonoBehaviour
 
         foreach(Luna l in lunas)
         {
-            l.updatePosEsfera(sizeEsfera+0.5f);
+            l.updatePosEsfera(sizeEsfera+0.5f,vel_esfera);
         }
 
     }
@@ -57,12 +57,15 @@ public class RotacionEtelar : MonoBehaviour
     {
         if (path) //Add
         {
+            print(dif);
             for (int i = 0; i < dif; i++)
             {
                 Luna newMoon = new Luna();
-                newMoon.angleOffset = Time.time;
+                newMoon.angleOffset = (Time.time)+(0.6f * lunas.Count);
                 newMoon.planet = transform;
+                newMoon.offsetDis = 1.0f * lunas.Count;
                 newMoon.lunaRef = Instantiate(LunaObj, transform.position, Quaternion.identity);
+
                 lunas.Add(newMoon);
             }
 
@@ -78,15 +81,16 @@ public class RotacionEtelar : MonoBehaviour
 
     public class Luna
     {
-
+        public float offsetDis;
         public float angleOffset;
         public Transform planet;
         public Transform lunaRef;
 
-        public void updatePosEsfera(float dis)
+        public void updatePosEsfera(float dis , float vel)
         {
-            float x1 = Mathf.Cos(Time.time + angleOffset) * dis;
-            float y1 = Mathf.Sin(Time.time + angleOffset) * dis;
+            float angle = (Time.time + angleOffset) * vel;
+            float x1 = Mathf.Cos(angle) * (dis+ offsetDis);
+            float y1 = Mathf.Sin(angle) * (dis+ offsetDis);
 
             lunaRef.position = new Vector3(x1, 0.0f, y1) + planet.position;
         }
