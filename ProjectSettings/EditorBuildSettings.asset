@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_Macanica Parcial 3/examen3/scn_examen3.unity
+    guid: c6b6de3086cf02d4bb21876a0e16589c
   m_configObjects: {}
