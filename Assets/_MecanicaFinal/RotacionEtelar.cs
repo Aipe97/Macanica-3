@@ -23,14 +23,18 @@ public class RotacionEtelar : MonoBehaviour
 
         sizeEsfera1= Mathf.Clamp(sizeEsfera1, 0.5f, 5f);
 
-        trans_esfera1.localScale = Vector3.one * sizeEsfera1;
-        trans_esfera2.localScale = Vector3.one * (5f-sizeEsfera1);
+        trans_esfera1.localScale = Vector3.one * (5.5f - sizeEsfera1);
+        trans_esfera2.localScale = Vector3.one * sizeEsfera1;
 
         vel_esfera1 = sizeEsfera1;
         vel_esfera2 = (5f-sizeEsfera1);
 
-        updatePosEsfera(trans_esfera1, vel_esfera1, dis_esfera1);
-        updatePosEsfera(trans_esfera2, vel_esfera2, dis_esfera2);
+        //updatePosEsfera(trans_esfera1, vel_esfera1, dis_esfera1);
+        //updatePosEsfera(trans_esfera2, vel_esfera2, dis_esfera2);
+
+        trans_esfera1.Rotate(Vector3.up, vel_esfera1);
+        trans_esfera2.Rotate(Vector3.up, vel_esfera2);
+
 
     }
 
