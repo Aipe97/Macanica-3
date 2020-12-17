@@ -5,9 +5,12 @@ using UnityEngine;
 public class RotacionEtelar : MonoBehaviour
 {
     public Transform LunaObj;
-    float vel_esfera=1;
-    float sizeEsfera=1;
+    float vel_esfera = 1;
+    float sizeEsfera = 1;
     int f_numLunas = 0;
+    double vel_Tangencial = 0;
+    double vel_Angular = 0;
+
 
     List<Luna> lunas;
     // Start is called before the first frame update
@@ -19,10 +22,21 @@ public class RotacionEtelar : MonoBehaviour
     //Se enfoca en la rotacion y rescala del planeta,  y restablece su velocidad
     private void RotatePlanet()
     {
-        transform.localScale = Vector3.one *  sizeEsfera; //Modifica la escal del objeto 
+        transform.localScale = Vector3.one * sizeEsfera; //Modifica la escal del objeto 
         vel_esfera = (5.5f - sizeEsfera);// Ajusta su velocidad deacuedo a su tamaño
         transform.Rotate(Vector3.up, vel_esfera);//Rota el planeta
     }
+
+    public double GetVelTangencial() //Da la velocidad tangencial de la superficie del planeta
+    {
+        //     7.2      =   1Hz
+        //vel_esfera    =   ???
+
+        vel_Tangencial = 2 * 3.1416 * GetComponent<SphereCollider>().radius * (vel_esfera / 7.2);
+
+        return vel_Tangencial;
+    }
+
     //Se enfoca en recibir la informacion del manager de PlanetManager
     public void EditPlanet(float size)
     {
@@ -32,19 +46,21 @@ public class RotacionEtelar : MonoBehaviour
         CheckSize();
     }
     //Revisa el tamaño del objeto para decidir cuantas lunas tiene el objeto
-    private void CheckSize() {
+    private void CheckSize()
+    {
         int numLuna = (int)sizeEsfera;//Normaliza el tamaño para tener solo los integers
 
-        if(numLuna!= f_numLunas)//Checa si ahi un cambio en el tamaño
+        if (numLuna != f_numLunas)//Checa si ahi un cambio en el tamaño
         {
             //Crea o destruye lunas para cual es la diferencia y si es elimnar o crear
-            CreateOrDeleteLuna(Mathf.Abs(numLuna-f_numLunas), numLuna>f_numLunas);
+            CreateOrDeleteLuna(Mathf.Abs(numLuna - f_numLunas), numLuna > f_numLunas);
         }
 
-        foreach(Luna l in lunas) //Por cada luna se actualiza la posicion de rotacion
+        foreach (Luna l in lunas) //Por cada luna se actualiza la posicion de rotacion
         {
             //Recibe el tamaño de la esfera mas un offset y la velocidad de la misma
-            l.updatePosEsfera(sizeEsfera+0.5f,vel_esfera);
+            l.updatePosEsfera(sizeEsfera + 0.5f, vel_esfera);
+            vel_Angular = l.GetVelAngular();
         }
 
     }
@@ -56,7 +72,7 @@ public class RotacionEtelar : MonoBehaviour
             for (int i = 0; i < dif; i++)//Por cada uno que se agrega se crea una luna nueva
             {
                 Luna newMoon = new Luna();
-                newMoon.angleOffset = (Time.time)+(0.6f * lunas.Count);
+                newMoon.angleOffset = (Time.fixedTime) + (0.6f * lunas.Count);
                 newMoon.planet = transform;
                 newMoon.offsetDis = 1.0f * lunas.Count;
                 newMoon.lunaRef = Instantiate(LunaObj, transform.position, Quaternion.identity);
@@ -64,14 +80,19 @@ public class RotacionEtelar : MonoBehaviour
                 lunas.Add(newMoon);
             }
 
-            
+
         }
-        else if(lunas.Count>0) //Delete
+        else if (lunas.Count > 0) //Delete
         {
-            Destroy(lunas[lunas.Count-1].lunaRef.gameObject);//Se elimina el game object de la luna
-            lunas.RemoveAt(lunas.Count-1);//Remueve la ultima luna de la lista
+            Destroy(lunas[lunas.Count - 1].lunaRef.gameObject);//Se elimina el game object de la luna
+            lunas.RemoveAt(lunas.Count - 1);//Remueve la ultima luna de la lista
         }
         f_numLunas = lunas.Count;//Actualiza la cantidad de luans que ahi en la lista
+    }
+
+    public double regresarVelAng() //envia este valor al otro codigo para mostrarlo en pantalla
+    {
+        return vel_Angular;
     }
 
     //Clase que define el comportamiento de la luna
@@ -81,14 +102,31 @@ public class RotacionEtelar : MonoBehaviour
         public float angleOffset;//Offset de rotacion
         public Transform planet;//Referencai al planeta al que pertenece
         public Transform lunaRef;//Referencia al gameobject en el mundo
+        float vel_lunar = 0;
 
-        public void updatePosEsfera(float dis , float vel)
+        public void updatePosEsfera(float disDelPlaneta, float velPlaneta)
         {
-            float angle = (Time.time + angleOffset) * vel; // Calcula el angulo en Rad
-            float x1 = Mathf.Cos(angle) * (dis+ offsetDis); //Calcula su posicion en "x" y "y"
-            float y1 = Mathf.Sin(angle) * (dis+ offsetDis);
+            //Time.fixedTime == 50 calls per second
+            //Time.fixedTime * 7.2 == 1 rotation per second
+            //50 calls * 7.2 == == 1 rotation per second
+            //360 calls per second == 1 rotation per second
+
+            float angle = (Time.fixedTime + angleOffset) * velPlaneta; // Calcula el angulo en Rad
+                         //(50 * velPlaneta)                           // angleOffset es irrelevante en este calculo
+
+            vel_lunar = velPlaneta; //Despues de pasarme horas despejando y remplazando valores apenas me doy cuenta que la velocidad de las lunas es la misma que la del planeta
+
+            float x1 = Mathf.Cos(angle) * (disDelPlaneta + offsetDis); //Calcula su posicion en "x" y "y"
+            float y1 = Mathf.Sin(angle) * (disDelPlaneta + offsetDis);
 
             lunaRef.position = new Vector3(x1, 0.0f, y1) + planet.position; //Actualiza la posicion
+            
+        }
+
+        public float GetVelAngular()
+        {
+            return vel_lunar;
         }
     }
+    
 }
