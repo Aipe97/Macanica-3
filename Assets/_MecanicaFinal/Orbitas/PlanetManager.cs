@@ -26,9 +26,21 @@ public class PlanetManager : MonoBehaviour
         planeta1.EditPlanet(sizeEsfera);
         planeta2.EditPlanet((5.5f-sizeEsfera));
 
-        VelTan1.text = "Velocidad Tangencial = " + planeta1.GetVelTangencial().ToString("F4");
-        VelTan2.text = "Velocidad Tangencial = " + planeta2.GetVelTangencial().ToString("F4");
-        VelAng1.text = "Velocidad Angular = " + planeta1.regresarVelAng().ToString("F4");
-        VelAng2.text = "Velocidad Angular = " + planeta2.regresarVelAng().ToString("F4");
+        VelTan1.text = "Planeta" +
+            "\nVelocidad Tangencial = " + planeta1.GetVelTangencial().ToString("F4") +
+            "\nRadio: " + planeta1.GetRadius().ToString("F4") + 
+            "\nFrecuencia: " + planeta1.GetHz().ToString("F4");
+        VelTan2.text = "Planeta" +
+            "\nVelocidad Tangencial = " + planeta2.GetVelTangencial().ToString("F4") +
+            "\nRadio: " + planeta2.GetRadius().ToString("F4") +
+            "\nFrecuencia: " + planeta2.GetHz().ToString("F4"); ;
+        VelAng1.text = "Lunas" +
+            "\nVelocidad Angular = " + planeta1.regresarVelAng().ToString("F4") +
+            "\nDistancia rotacion: " + planeta1.regresarLunarHz().ToString("F4") + " grados" +
+            "\ntiempo recorrido: 1 segundo";
+        VelAng2.text = "Lunas" +
+            "\nVelocidad Angular = " + planeta2.regresarVelAng().ToString("F4") + 
+            "\nDistancia recorrida: " + planeta2.regresarLunarHz().ToString("F4") + " grados" + 
+            "\ntiempo recorrido: 1 segundo";
     }
 }

@@ -9,7 +9,8 @@ public class RotacionEtelar : MonoBehaviour
     float sizeEsfera = 1;
     int f_numLunas = 0;
     double vel_Tangencial = 0;
-    double vel_Angular = 0;
+    double vel_LunAngular = 0;
+    double hzLunares;
 
 
     List<Luna> lunas;
@@ -32,9 +33,17 @@ public class RotacionEtelar : MonoBehaviour
         //     7.2      =   1Hz
         //vel_esfera    =   ???
 
-        vel_Tangencial = 2 * 3.1416 * GetComponent<SphereCollider>().radius * (vel_esfera / 7.2);
+        vel_Tangencial = 2 * 3.1416 * (transform.localScale.x / 2) * (vel_esfera / 7.2);
 
         return vel_Tangencial;
+    }
+    public double GetRadius() //Da la velocidad tangencial de la superficie del planeta
+    {
+        return transform.localScale.x/2;
+    }
+    public double GetHz() //Da la velocidad tangencial de la superficie del planeta
+    {
+        return (vel_esfera / 7.2);
     }
 
     //Se enfoca en recibir la informacion del manager de PlanetManager
@@ -60,7 +69,8 @@ public class RotacionEtelar : MonoBehaviour
         {
             //Recibe el tamaño de la esfera mas un offset y la velocidad de la misma
             l.updatePosEsfera(sizeEsfera + 0.5f, vel_esfera);
-            vel_Angular = l.GetVelAngular();
+            vel_LunAngular = l.GetVelAngular();
+            hzLunares = l.GetLunarHz();
         }
 
     }
@@ -92,7 +102,12 @@ public class RotacionEtelar : MonoBehaviour
 
     public double regresarVelAng() //envia este valor al otro codigo para mostrarlo en pantalla
     {
-        return vel_Angular;
+        return vel_LunAngular;
+    }
+
+    public double regresarLunarHz() //envia este valor al otro codigo para mostrarlo en pantalla
+    {
+        return hzLunares;
     }
 
     //Clase que define el comportamiento de la luna
@@ -103,6 +118,7 @@ public class RotacionEtelar : MonoBehaviour
         public Transform planet;//Referencai al planeta al que pertenece
         public Transform lunaRef;//Referencia al gameobject en el mundo
         float vel_lunar = 0;
+        float vel_planeta = 0;
 
         public void updatePosEsfera(float disDelPlaneta, float velPlaneta)
         {
@@ -114,18 +130,27 @@ public class RotacionEtelar : MonoBehaviour
             float angle = (Time.fixedTime + angleOffset) * velPlaneta; // Calcula el angulo en Rad
                          //(50 * velPlaneta)                           // angleOffset es irrelevante en este calculo
 
+            //omega = cambio de rotacion / cambio de tiempo
+
             vel_lunar = velPlaneta; //Despues de pasarme horas despejando y remplazando valores apenas me doy cuenta que la velocidad de las lunas es la misma que la del planeta
 
             float x1 = Mathf.Cos(angle) * (disDelPlaneta + offsetDis); //Calcula su posicion en "x" y "y"
             float y1 = Mathf.Sin(angle) * (disDelPlaneta + offsetDis);
 
             lunaRef.position = new Vector3(x1, 0.0f, y1) + planet.position; //Actualiza la posicion
-            
+            vel_planeta = velPlaneta;
         }
 
         public float GetVelAngular()
         {
             return vel_lunar;
+        }
+
+        public double GetLunarHz()
+        {
+            //50 * 7.2 = 1Hz
+            //50 *  velPlaneta = ?
+            return 50 * vel_planeta;            
         }
     }
     
