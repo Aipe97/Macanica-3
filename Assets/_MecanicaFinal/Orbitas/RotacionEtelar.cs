@@ -113,6 +113,7 @@ public class RotacionEtelar : MonoBehaviour
     //Clase que define el comportamiento de la luna
     public class Luna
     {
+
         public float offsetDis;//Offset de distancia de la luna al planeta
         public float angleOffset;//Offset de rotacion
         public Transform planet;//Referencai al planeta al que pertenece
