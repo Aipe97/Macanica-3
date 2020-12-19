@@ -57,7 +57,8 @@ public class RotacionEtelar : MonoBehaviour
     //Revisa el tamaño del objeto para decidir cuantas lunas tiene el objeto
     private void CheckSize()
     {
-        int numLuna = (int)sizeEsfera;//Normaliza el tamaño para tener solo los integers
+        int numLuna = (int)(sizeEsfera/0.05f);//Normaliza el tamaño para tener solo los integers
+        print(numLuna);
 
         if (numLuna != f_numLunas)//Checa si ahi un cambio en el tamaño
         {
