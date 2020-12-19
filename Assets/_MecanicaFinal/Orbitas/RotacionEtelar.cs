@@ -119,6 +119,7 @@ public class RotacionEtelar : MonoBehaviour
         public Transform lunaRef;//Referencia al gameobject en el mundo
         float vel_lunar = 0;
         float vel_planeta = 0;
+        float randomParaY = Random.Range(-4.0f, 4.0f);
 
         public void updatePosEsfera(float disDelPlaneta, float velPlaneta)
         {
@@ -135,9 +136,10 @@ public class RotacionEtelar : MonoBehaviour
             vel_lunar = velPlaneta; //Despues de pasarme horas despejando y remplazando valores apenas me doy cuenta que la velocidad de las lunas es la misma que la del planeta
 
             float x1 = Mathf.Cos(angle) * (disDelPlaneta + offsetDis); //Calcula su posicion en "x" y "y"
-            float y1 = Mathf.Sin(angle) * (disDelPlaneta + offsetDis);
+            float z1 = Mathf.Sin(angle) * (disDelPlaneta + offsetDis);
+            float y1 = Mathf.Sin(angle) * randomParaY;
 
-            lunaRef.position = new Vector3(x1, 0.0f, y1) + planet.position; //Actualiza la posicion
+            lunaRef.position = new Vector3(x1, y1, z1) + planet.position; //Actualiza la posicion
             vel_planeta = velPlaneta;
         }
 
