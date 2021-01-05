@@ -7,6 +7,7 @@ public class PlanetManager : MonoBehaviour
 {
     RotacionEtelar[] planetas;
     float[] distancias;
+    public Gradient ColorGradiant;
     public Text VelTan1, VelTan2, VelAng1, VelAng2;
     float sizeEsfera;
     // Start is called before the first frame update
@@ -33,14 +34,17 @@ public class PlanetManager : MonoBehaviour
 
         for(int i = 0; i < planetas.Length; i++)
         {
-            float velocidad = Mathf.Abs(((float)i+1.0f) - sizeEsfera);
+            float velocidad = Mathf.Abs(((float)i+1.0f) - sizeEsfera); //(posicion array+1)-escala  (1|6)-(0|5)
             planetas[i].EditPlanet(velocidad/transform.localScale.x);
             float angle = (Time.fixedTime + ((float)i * 5f))/ (Mathf.Pow(transform.localScale.x/10f,2f)); // Calcula el angulo en Rad
 
-            float xpos = Mathf.Cos(angle) * distancias[i]; //Calcula su posicion en "x" y "y"
-            float ypos = Mathf.Sin(angle) * distancias[i];
+            float xpos = Mathf.Cos(angle); //Calcula su posicion en "x" y "y"
+            float ypos = Mathf.Sin(angle);
 
-            planetas[i].transform.position = new Vector3(xpos, 0.0f, ypos) + transform.position; //Actualiza la posicion
+            Vector3 posicion = new Vector3(xpos, 0.0f, ypos);
+            planetas[i].transform.position = (posicion*distancias[i]) + transform.position; //Actualiza la posicion
+
+            ActualizarLineaVel(planetas[i], new Vector3(Mathf.Cos(angle+90), 0.0f, Mathf.Sin(angle+90)), velocidad);
         }
 
        // planeta1.EditPlanet(sizeEsfera);
@@ -62,5 +66,16 @@ public class PlanetManager : MonoBehaviour
             "\nVelocidad Angular = " + planeta2.regresarVelAng().ToString("F4") + 
             "\nDistancia recorrida: " + planeta2.regresarLunarHz().ToString("F4") + " grados" + 
             "\ntiempo recorrido: 1 segundo";*/
+    }
+
+    private void ActualizarLineaVel(RotacionEtelar planeta,Vector3 dir ,float velocidad)
+    {
+        LineRenderer LineRenderer= planeta.LineReVelocidad;
+        LineRenderer.SetPosition(0,planeta.transform.position);
+        LineRenderer.SetPosition(1,planeta.transform.position+(dir*velocidad*5f));
+
+        Color col = ColorGradiant.Evaluate(velocidad/5f);
+
+        LineRenderer.material.color=col;
     }
 }

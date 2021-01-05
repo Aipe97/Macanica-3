@@ -5,6 +5,8 @@ using UnityEngine;
 public class RotacionEtelar : MonoBehaviour
 {
     public Transform LunaObj;
+
+    LineRenderer Line;
     float vel_esfera = 1;
     float sizeEsfera = 1;
     int f_numLunas = 0;
@@ -14,10 +16,19 @@ public class RotacionEtelar : MonoBehaviour
 
 
     List<Luna> lunas;
+
+    public LineRenderer LineReVelocidad
+    {
+        get { return Line; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         lunas = new List<Luna>();
+        Line = GetComponent<LineRenderer>();
+
+        Line.SetVertexCount(2);
     }
 
     //Se enfoca en la rotacion y rescala del planeta,  y restablece su velocidad
