@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Scene_Manager : MonoBehaviour
 {
-    List<scrpt_MovimientoArmonico> pelotas;
-    public scrpt_MovimientoArmonico refObjeto;
+    List<GameObject> pelotas;
+    public Object refObjeto;
     // Start is called before the first frame update
     void Start()
     {
-        pelotas = new List<scrpt_MovimientoArmonico>();
-        scrpt_MovimientoArmonico primera = GameObject.FindGameObjectWithTag("esfera").GetComponent<scrpt_MovimientoArmonico>();
+        pelotas = new List<GameObject>();
+        GameObject primera = GameObject.FindGameObjectWithTag("esfera");
         pelotas.Add(primera);
     }
 
@@ -21,13 +21,17 @@ public class Scene_Manager : MonoBehaviour
         {
             CrearPelota();
         }
+        else if (Input.GetMouseButton(0))
+        {
+
+        }
     }
 
     void CrearPelota()
     {
         int pos;
         Vector3 dir= ChecarPosisionYDireccion(out pos);
-        scrpt_MovimientoArmonico pelota= Instantiate(refObjeto, dir * pos, Quaternion.identity);
+        GameObject pelota= Instantiate(refObjeto, dir * pos, Quaternion.identity) as GameObject;
 
         pelotas.Add(pelota);
     }

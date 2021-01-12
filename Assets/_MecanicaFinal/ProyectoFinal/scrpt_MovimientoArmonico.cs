@@ -6,7 +6,7 @@ public class scrpt_MovimientoArmonico : MonoBehaviour
 {
     public Gradient colorPerSec;
     LineRenderer linea;
-
+    public Transform puntoEquilibrio;
     public bool randomAmplitud;
 
     public float peso;
@@ -21,6 +21,7 @@ public class scrpt_MovimientoArmonico : MonoBehaviour
 
     float initTime;
 
+    float[] variablesDesignadas = { 1f, 2f, 3f, 4f, 5f };
     // Start is called before the first frame update
     void Start()
     {
@@ -42,19 +43,28 @@ public class scrpt_MovimientoArmonico : MonoBehaviour
 
     private void IniciarVariables()
     {
-        amplitud = Random.Range(0.1f, 10.0f);
-        peso = Random.Range(0.1f, 10.0f);
-
-        variable_hooke = peso * 9.81f / amplitud;
-        frecuenciaCiclica = Mathf.Sqrt(variable_hooke / peso);
+        if (randomAmplitud)
+        {
+            amplitud = Random.Range(0.1f, 10.0f);
+            peso = variablesDesignadas[Random.Range(0, variablesDesignadas.Length - 1)];
+        }
+        else
+        {
+            peso = Random.Range(0.1f, 10.0f);
+            amplitud = variablesDesignadas[Random.Range(0, variablesDesignadas.Length - 1)];
+        }
+        variable_hooke = peso * 9.81f / amplitud; // m*a/A
+        frecuenciaCiclica = Mathf.Sqrt(variable_hooke / peso); // 
 
         aceleracionMax = Mathf.Pow(frecuenciaCiclica, 2) * amplitud;
         velocidadMax = frecuenciaCiclica * amplitud;
+
+        puntoEquilibrio.position = (Vector3.up * amplitud) + transform.position;
     }
 
     private void CambiarVariables()
     {
-        float angulo = (frecuenciaCiclica * (Time.time-initTime)) - 90f;
+        float angulo = (frecuenciaCiclica * (Time.time-initTime)) - 90f; // 
 
         position = (amplitud * Mathf.Sin(angulo)) + amplitud;
         Vector3 temp = transform.position;
