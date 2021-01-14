@@ -21,10 +21,10 @@ public class Scene_Manager : MonoBehaviour
         {
             CrearPelota();
         }
-        else if (Input.GetMouseButton(0))
+        /*else if (Input.GetMouseButton(0)) //PARA QUE EXISTE ESTO??
         {
 
-        }
+        }*/
     }
 
     void CrearPelota()
