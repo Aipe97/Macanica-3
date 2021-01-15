@@ -23,7 +23,7 @@ public class scrpt_MovimientoArmonico : MonoBehaviour
 
     float[] variablesDesignadas = { 1f, 2f, 3f, 4f, 5f };
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         IniciarVariables();
 

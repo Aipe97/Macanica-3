@@ -148,14 +148,14 @@ RectTransform:
   m_GameObject: {fileID: 11325006}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -7.217394}
-  m_LocalScale: {x: 2.974739, y: 2.0640757, z: 1.8957347}
+  m_LocalScale: {x: 3.0077589, y: 2.0640757, z: 1.8957347}
   m_Children: []
   m_Father: {fileID: 1336659781}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 131, y: -97}
+  m_AnchoredPosition: {x: 125.6, y: -97}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &11325008
@@ -500,7 +500,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Aceleracion = 0.0
+  m_Text: 'Aceleracion: 0.0
 
 '
 --- !u!222 &352530835
@@ -596,7 +596,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Amplitud random = 0.0
+  m_Text: 'Variable hooke: 0.0
 
 '
 --- !u!222 &407894910
@@ -791,7 +791,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Velocidad = 0.0
+  m_Text: 'Velocidad: 0.0
 
 '
 --- !u!222 &606211223
@@ -983,7 +983,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Peso = 0.0
+  m_Text: 'Peso: 0.0
 
 '
 --- !u!222 &774841659
@@ -1998,7 +1998,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Amplitud = 0.0
+  m_Text: 'Amplitud: 0.0
 
 '
 --- !u!222 &2127638374

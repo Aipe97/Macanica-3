@@ -32,7 +32,7 @@ public class scrpt_zoomCamara : MonoBehaviour
         valores = GameObject.FindGameObjectWithTag("Variables_1");
         //valores.SetActive(false);
 
-        t_amplitud = GameObject.FindGameObjectWithTag("Peso").GetComponent<Text>();
+        t_amplitud = GameObject.FindGameObjectWithTag("Amplitud").GetComponent<Text>();
         t_peso = GameObject.FindGameObjectWithTag("Peso").GetComponent<Text>();
         t_aceleracion = GameObject.FindGameObjectWithTag("Aceleracion").GetComponent<Text>();
         t_velocidad = GameObject.FindGameObjectWithTag("Velocidad").GetComponent<Text>();
@@ -52,11 +52,11 @@ public class scrpt_zoomCamara : MonoBehaviour
 
             //Mostramos los valores en la pantalla y los textos
             valores.SetActive(true);
-            t_amplitud.text = "Amplitud:" + n_amplitud.ToString();
-            t_velocidad.text = "Velocidad:" + n_Velocidad.ToString();
-            t_aceleracion.text = "Aceleracion:" + n_aceleracion.ToString();
-            t_peso.text = "Peso:" + n_Peso.ToString();
-            t_RandomA.text = "Variable" + n_randomA.ToString();
+            t_amplitud.text = "Amplitud: " + n_amplitud.ToString("F2");
+            t_velocidad.text = "Velocidad: " + n_Velocidad.ToString("F2");
+            t_aceleracion.text = "Aceleracion: " + n_aceleracion.ToString("F2");
+            t_peso.text = "Peso: " + n_Peso.ToString("F2");
+            t_RandomA.text = "Variable hooke : " + n_randomA.ToString("F2");
 
             //Acercar la camara de manera natural y alejarla
             float dir = (zoomInOut) ? Time.deltaTime : -Time.deltaTime;
