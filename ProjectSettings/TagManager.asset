@@ -10,6 +10,12 @@ TagManager:
   - posicionCamara
   - slider
   - textoChoqueTipo
+  - Variables_1
+  - Amplitud
+  - Velocidad
+  - Aceleracion
+  - Peso
+  - Random
   layers:
   - Default
   - TransparentFX
