@@ -17,7 +17,7 @@ public class Scene_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Equals) && pelotas.Count<5)
+        if (Input.GetKeyDown(KeyCode.KeypadPlus) && pelotas.Count<5)
         {
             CrearPelota();
         }
